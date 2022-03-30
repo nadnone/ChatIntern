@@ -1,8 +1,6 @@
 {
   "dependencies": {
-    "express": "^4.16.4",
-    "npm": "^8.5.5",
-    "serve-static": "^1.13.2",
-    "ws": "^6.1.4"
+    "express": "^4.17.3",
+    "ws": "^8.5.0"
   }
 }

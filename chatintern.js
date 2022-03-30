@@ -27,7 +27,7 @@ wss.on("connection", function connection(ws){
         // data deal
         if (message !== undefined) {
 
-            console.log(message);
+            console.log(message.toString());
 
             for (let i = 0; i < addressList.length; i++) {
                 const obj = addressList[i];
