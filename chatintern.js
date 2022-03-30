@@ -3,20 +3,25 @@ const serverStatic = require("serve-static");
 const WebSocket = require("ws");
 
 var app = express();
-app.use(serverStatic("clientHome", {"index": ["index.html", "index.htm"]}));
+app.use(serverStatic("clientHome", {"index": ["index.html"]}));
 app.listen(80);
 
 const wss = new WebSocket.Server({ port: 8080 });
 
 var addressList = [];
-var wsList = [];
-
 
 wss.on("connection", function connection(ws){
 
-    addressList.push(ws._socket.address());
-    wsList.push(ws);
+
+    let obj_addr = {
+        "addr": ws._socket.address(),
+        "ws": ws
+    };
+    addressList.push(obj_addr);
+
     ws.send("Client Connected");
+
+
 
     ws.on("message", function incomping(message){
         // data deal
@@ -24,10 +29,13 @@ wss.on("connection", function connection(ws){
 
             console.log(message);
 
-            for (var i = 0; i < addressList.length; i++) {
-                if (addressList[i] !== ws._socket.address()) {
-                    ws.send(message);
+            for (let i = 0; i < addressList.length; i++) {
+                const obj = addressList[i];
+                if (obj.addr !== ws._socket.address()) 
+                {
+                    ws.send(message);   
                 }
+                
             }
 
         }
